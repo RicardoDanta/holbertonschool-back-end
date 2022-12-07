@@ -4,9 +4,10 @@ returns information about his/her TODO list progress"""
 
 import request
 
-url = "https://jsonplaceholder.typicode.com/todos/1"
-todos = request.get(url)
-if todos.status_code == 200:
-    todos = todos.json()
-    for i in todos["todos"]:
-        print(i["title"])
+if __name__ == '__main__':
+    url = "https://jsonplaceholder.typicode.com/todos/1"
+    todos = request.get(url)
+    if todos.status_code == 200:
+        todos = todos.json()
+        for i in todos["todos"]:
+            print(i["title"])
