@@ -12,9 +12,9 @@ from sys import argv
 if __name__ == "__main__":
     """Script that returns information about user todo list"""
     url = requests.get("https://jsonplaceholder.typicode.com/users/{}/todos".
-                     format(argv[1])).json()
+            format(argv[1])).json()
     user_name = requests.get("https://jsonplaceholder.typicode.com/users/{}".
-                             format(argv[1])).json()
+            format(argv[1])).json()
     completed_tasks = 0
     uncompleted_tasks = 0
     for i in url:
@@ -28,4 +28,4 @@ if __name__ == "__main__":
                  (completed_tasks + uncompleted_tasks)))
     for i in url:
         if i["completed"] is True:
-            print("\t {}".format(elem["title"]))
+            print("\t {}".format(url["title"]))
