@@ -10,24 +10,22 @@ from sys import argv
 
 
 if __name__ == "__main__":
-
-    get__user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
-                             .format(argv[1]))
-    get__name = (get__user.json().get("name"))
-
-    var = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
-                       .format(argv[1]))
-
-    get__val = var.json()
-    get__len__val = len(get__val)
-    res = []
-    count = 0
-    for task in get__val:
-        if task["completed"] is True:
-            res.append(task.get("title"))
-            count += 1
-    print("Employee {} is done with tasks({}/{}):"
-          .format(get__name, count, get__len__val))
-
-    for title in res:
-        print("\t {}".format(title))
+    """Script that returns information about user todo list"""
+    url = requests.get("https://jsonplaceholder.typicode.com/users/{}/todos".
+                     format(argv[1])).json()
+    user_name = requests.get("https://jsonplaceholder.typicode.com/users/{}".
+                             format(argv[1])).json()
+    completed_tasks = 0
+    uncompleted_tasks = 0
+    for i in url:
+        if i["completed"] is True:
+            completed_tasks = completed_tasks + 1
+    for i in url:
+        if i["completed"] is False:
+            uncompleted_tasks = uncompleted_tasks + 1
+    print("Employee {} is done with tasks ({}/{}):".
+          format(user_name["name"], completed_tasks,
+                 (completed_tasks + uncompleted_tasks)))
+    for i in url:
+        if i["completed"] is True:
+            print("\t {}".format(elem["title"]))
