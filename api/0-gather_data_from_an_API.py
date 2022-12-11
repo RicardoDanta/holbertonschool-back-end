@@ -5,8 +5,8 @@ returns information about his/her TODO list progress
 Code by Mateo Bonino"""
 
 import requests
-from sys import argv
 import sys
+from sys import argv
 
 
 if __name__ == '__main__':
