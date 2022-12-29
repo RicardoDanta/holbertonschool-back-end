@@ -2,39 +2,32 @@
 """Write a Python script that, using this REST API
 for a given employee ID
 returns information about his/her TODO list progress
-Code by Mateo Bonino"""
+Code by Mauricio Miranda"""
 
 import requests
 import sys
 from sys import argv
 
 
-if __name__ == '__main__':
-    user_id = sys.argv[1]
-    url = "https://jsonplaceholder.typicode.com/todos"
-    get_name = "https://jsonplaceholder.typicode.com/users"
-    response = requests.get(
-        url,
-        params={'userId': int(user_id)})
-    user_response = requests.get(
-        get_name,
-        params={'id': int(user_id)})
+if __name__ == "__main__":
+
+    get__user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
+                             .format(argv[1]))
+    get__name = (get__user.json().get("name"))
+
+    var = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
+                       .format(argv[1]))
+
+    get__val = var.json()
+    get__len__val = len(get__val)
+    res = []
     count = 0
-    total_tasks = 0
-    tasks_text = []
-
-    for key in response.json():
-        if key['completed'] is True:
+    for task in get__val:
+        if task["completed"] is True:
+            res.append(task.get("title"))
             count += 1
-            tasks_text.append(key['title'])
-        total_tasks += 1
-    employee_name = ''
-    for name in user_response.json():
-        if 'name' in name.keys():
-            employee_name = name['name']
+    print("Employee {} is done with tasks({}/{}):"
+          .format(get__name, count, get__len__val))
 
-    print("Employee {} is done with tasks({}/{}):".format(employee_name,
-                                                          count,
-                                                          total_tasks))
-    for task in tasks_text:
-        print("\t {}".format(task))
+    for title in res:
+        print("\t {}".format(title))
